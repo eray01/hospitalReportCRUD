@@ -1,0 +1,16 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-container > * {
+    width: 90%;
+    font-size: 20px;
+    margin-left: 15px;
+  }
+
+  
+  .info {
+    background-color: #e7f3fe;
+    border-left: 6px solid #2196F3;
+  }

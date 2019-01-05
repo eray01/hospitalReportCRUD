@@ -80,7 +80,7 @@ export class ReportsService {
   }
   getReportWithFileId(fileId) {
     return new Promise(resolve => {
-      this.http.get(this.url + '/report/fileid/' + fileId)
+      this.http.get(this.url + 'report/fileid/' + fileId)
         .subscribe(
           res => {
             resolve(res);
@@ -92,4 +92,27 @@ export class ReportsService {
     });
   }
 
+  postUser(fileId, name, tc, blood, address) {
+    const postparams = {
+      fileId: fileId,
+      name: name,
+      tcId: tc,
+      blood: blood,
+      address: address
+    };
+    return new Promise(resolve => {
+      this.http
+        .post(this.url + 'user/add', JSON.stringify(postparams), {
+          headers: new HttpHeaders().set('Content-Type', 'application/json')
+        })
+        .subscribe(
+          res => {
+            resolve(res);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+  }
 }

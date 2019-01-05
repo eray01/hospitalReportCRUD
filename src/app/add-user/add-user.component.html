@@ -1,3 +1,140 @@
-<p>
-  add-user works!
-</p>
+<header>
+  <div style=' margin-bottom: 15px; padding: 4px 12px;' class="info">
+    <p><strong>Bilgi!</strong> Hastayı ekledikten sonra rapor ekleyebilirsiniz.</p>
+  </div>
+  <h1>Hasta Ekleme</h1>
+  <!-- <p>Yeni rapor eklemeden önce kullanıcı oluşturulması gerekmektedir.</p> -->
+</header>
+
+<div class="form-container">
+  <mat-form-field>
+    <input matInput placeholder="Dosya Numarası" type="text" [(ngModel)]="fileId">
+    <button mat-button *ngIf="fileId" matSuffix mat-icon-button aria-label="Clear" (click)="fileId=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Ad Soyad" type="text" [(ngModel)]="name">
+    <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput maxlength='11' placeholder="TC Kimlik No" [(ngModel)]="tcNo">
+    <button mat-button *ngIf="tcNo" matSuffix mat-icon-button aria-label="Clear" (click)="tcNo=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput maxlength='4' placeholder="Kan Grubu" [(ngModel)]="blood">
+    <button mat-button *ngIf="blood" matSuffix mat-icon-button aria-label="Clear" (click)="blood=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Adres" [(ngModel)]="address">
+    <button mat-button *ngIf="address" matSuffix mat-icon-button aria-label="Clear" (click)="address=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div style="text-align: center">
+    <button style='width:200px; font-size: 20px' mat-stroked-button color='primary' (click)='addUser()'>Ekle</button>
+  </div>
+
+</div>
+
+<div>
+  <header>
+    <h1 color='primary'>Rapor Ekleme</h1>
+  </header>
+  <div class="form-container">
+
+
+    <div>
+      <input style="display: none" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" (change)="onFileChanged($event)"
+        #fileInput>
+      <button (click)="fileInput.click()">Select File</button>
+      <button (click)="onUpload()">Upload!</button>
+    </div>
+    <mat-form-field>
+      <input matInput placeholder="Tarih" name=x size=10 maxlength=10 (keyup)="formatDate()" [(ngModel)]="reportDetail.date">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Raporlayan Kişi" [(ngModel)]="reportDetail.reporter">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Dosya No" [(ngModel)]="reportDetail.fileNo">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Bazofilik Erit" [(ngModel)]="reportDetail.bazoErit">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Bazofilik Seri" [(ngModel)]="reportDetail.bazoSeri">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Comak" [(ngModel)]="reportDetail.comak">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Eozinofilik Seri" [(ngModel)]="reportDetail.eozino">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Lenfosit" [(ngModel)]="reportDetail.lenfosit">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Megakaryositler" [(ngModel)]="reportDetail.megakaryo">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Metamyelosit" [(ngModel)]="reportDetail.metam">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Monosit" [(ngModel)]="reportDetail.monosit">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Myelosit" [(ngModel)]="reportDetail.myelosit">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Myloblast" [(ngModel)]="reportDetail.myloblast">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Ortokromantofilik Erit" [(ngModel)]="reportDetail.ortokro">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Kan Grubu" [(ngModel)]="reportDetail.bazofili">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Parçalı" [(ngModel)]="reportDetail.parcali">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Plazma Hücresi" [(ngModel)]="reportDetail.plazma">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Polikromalofilik Erit" [(ngModel)]="reportDetail.polikro">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Proeritroblast " [(ngModel)]="reportDetail.proerit">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Promonosit" [(ngModel)]="reportDetail.promonosit">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Promyelosit" [(ngModel)]="reportDetail.promyelosit">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Sellulerite" [(ngModel)]="reportDetail.sellul">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Rapor" [(ngModel)]="reportDetail.rapor">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Tanı" [(ngModel)]="reportDetail.tani">
+    </mat-form-field>
+
+    <div style="text-align: center">
+      <button style='width:200px; font-size: 20px' mat-stroked-button color='primary' (click)='addReport()'>Ekle</button>
+    </div>
+
+  </div>
+</div>
