@@ -1,0 +1,30 @@
+.example-card {
+    text-align: center;
+  }
+  
+  .example-header-image {
+    background-size: cover;
+  }
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    text-transform: capitalize;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    text-transform: capitalize;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+    text-transform: capitalize
+  }
+
+  .wideBorder{
+    border: 1px solid #d0d0d0;
+  }

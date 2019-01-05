@@ -1,16 +1,95 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportsService {
-  url = 'assets/fake.json';
+  url = 'http://localhost:8080/';
+  testurl = 'assets/fake.json';
+  myIds: Array<Number> = [];
   constructor(private http: HttpClient) {
     console.log('hi from service');
   }
 
   getData() {
-    return this.http.get(this.url);
+    return this.http.get(this.testurl);
   }
+  saveIds(produIds: any) {
+    console.log(produIds, 'id geldi');
+
+    this.myIds = produIds;
+  }
+  retrieveIDs() {
+    return this.myIds;
+  }
+  getUser() {
+    return new Promise(resolve => {
+      this.http.get(this.url + 'user/all')
+        .subscribe(
+          res => {
+            resolve(res);
+          },
+          error => {
+            console.log(error);
+
+          }
+        );
+    });
+  }
+
+  getUserDetail(id) {
+    return new Promise(resolve => {
+      this.http.get(this.url + 'user/' + id)
+        .subscribe(
+          res => {
+            resolve(res);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+  }
+  getUserSearch(query) {
+    return new Promise(resolve => {
+      this.http.get(this.url + 'user/find/' + query)
+        .subscribe(
+          res => {
+            resolve(res);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+  }
+  getUserWithFileId(fileId) {
+    return new Promise(resolve => {
+      this.http.get(this.url + 'user/' + fileId)
+        .subscribe(
+          res => {
+            resolve(res);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+  }
+  getReportWithFileId(fileId) {
+    return new Promise(resolve => {
+      this.http.get(this.url + '/report/fileid/' + fileId)
+        .subscribe(
+          res => {
+            resolve(res);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+  }
+
 }

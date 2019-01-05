@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ReportsService } from './reports.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,13 +13,10 @@ export class AppComponent {
     /*service denedik*/
     this.reportService.getData().subscribe((data: any) => {
 
-      console.log(data.textfile);
+ //     console.log(data.textfile);
 
     });
   }
-  title = 'hospitalReport';
-  test() {
-    console.log('tıkladı');
-  }
+
 }
 

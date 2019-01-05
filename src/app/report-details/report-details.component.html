@@ -1,0 +1,112 @@
+<div class='wideBorder'>
+
+
+  <button mat-fab (click)="forward()" style="float: right">İleri</button>
+  <button mat-fab (click)="back()" style="float: left">Geri</button>
+
+    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+    <!-- <slideshow class="example-header-image" [minHeight]="'400px'"  [showArrows]="true" [imageUrls]="imageUrlArray"
+    [lazyLoad]="imageUrlArray?.length > 1" [autoPlayWaitForLazyLoad]="true">
+  </slideshow> -->
+
+    <!-- <ngx-image-viewer  [src]="imageUrlArray" ></ngx-image-viewer> -->
+    <ngx-imageviewer [src]="imageUrlArray[counter]"></ngx-imageviewer>
+
+
+
+
+</div>
+
+<table *ngFor='let item of this.searchList'>
+  <td>Rapor No: {{item.raporId}}</td>
+  <td>Raporlayan: {{item.raporEden}}</td>
+  <tr>
+    <th>Değerler</th>
+    <th>Sonuçlar</th>
+  </tr>
+  <tr>
+    <td>Bazofilik Erit</td>
+    <td>{{item.bazofilikErit}}</td>
+  </tr>
+  <tr>
+    <td>Bazofilik Seri</td>
+    <td>{{item.bazofilikSeri}}</td>
+  </tr>
+  <tr>
+    <td>Comak</td>
+    <td>{{item.comak}}</td>
+  </tr>
+  <tr>
+    <td>Eozinofilik Seri</td>
+    <td>{{item.EozinofilikSeri}}</td>
+  </tr>
+  <tr>
+    <td>Lenfosit</td>
+    <td>{{item.lenfosit}}</td>
+  </tr>
+  <tr>
+    <td>Megakaryositler</td>
+    <td>{{item.megakaryositler}}</td>
+  </tr>
+  <tr>
+    <td>Metamyelosit</td>
+    <td>{{item.metamyelosit}}</td>
+  </tr>
+  <tr>
+    <td>Monosit</td>
+    <td>{{item.monosit}}</td>
+  </tr>
+  <tr>
+    <td>Myelosit</td>
+    <td>{{item.myelosit}}</td>
+  </tr>
+  <tr>
+    <td>Myloblast</td>
+    <td>{{item.myloblast}}</td>
+  </tr>
+  <tr>
+    <td>Ortokromantofilik Erit</td>
+    <td>{{item.ortokromantofilikErit}}</td>
+  </tr>
+  <tr>
+    <td>Parçalı</td>
+    <td>{{item.parcali}}</td>
+  </tr>
+  <tr>
+    <td>Plazma Hücresi</td>
+    <td>{{item.plazmaHucresi}}</td>
+  </tr>
+  <tr>
+    <td>Polikromalofilik Erit</td>
+    <td>{{item.polikromalofilikErit}}</td>
+  </tr>
+  <tr>
+    <td>Proeritroblast</td>
+    <td>{{item.proeritroblast}}</td>
+  </tr>
+  <tr>
+    <td>Promonosit</td>
+    <td>{{item.promonosit}}</td>
+  </tr>
+  <tr>
+    <td>Promyelosit</td>
+    <td>{{item.promyelosit}}</td>
+  </tr>
+  <tr>
+    <td>Rapor</td>
+    <td>{{item.rapor}}</td>
+  </tr>
+  <tr>
+    <td>Sellulerite</td>
+    <td>{{item.sellulerite}}</td>
+  </tr>
+  <tr>
+    <td>Tanı</td>
+    <td>{{item.tani}}</td>
+  </tr>
+</table>
+
+<mat-card *ngIf="!isLoading" style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner color="primary" mode="indeterminate">
+  </mat-progress-spinner>
+</mat-card>

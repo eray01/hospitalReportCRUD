@@ -1,4 +1,12 @@
 {
   "heroesUrl": "api/heroes",
-  "textfile": "assets/textfile.txt"
+  "textfile": "assets/textfile.txt",
+  "heroesUrl1": "api/heroes",
+  "textfile1": "assets/textfile.txt",
+  "heroesUrl2": "api/heroes",
+  "textfile2": "assets/textfile.txt",
+  "heroesUrl3": "api/heroes",
+  "textfile3": "assets/textfile.txt",
+  "heroesUrl4": "api/heroes",
+  "textfile4": "assets/textfile.txt"
 }
