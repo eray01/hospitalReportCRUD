@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReportsService } from '../reports.service';
-import { element } from '@angular/core/src/render3';
 
 export interface ReportInfo {
   bazofilik: any;
@@ -23,26 +22,19 @@ export class ReportDetailsComponent implements OnInit {
   isLoading = false;
   temp: any = [];
   reportArr: ReportInfo[] = new Array<ReportInfo>();
+  test: any = [];
   constructor(
     private route: ActivatedRoute,
     private dataService: ReportsService
-  ) {
-    this.imageUrlArray = ['https://material.angular.io/assets/img/examples/shiba2.jpg',
-      'https://angular.io/assets/images/logos/angular/logo-nav@2x.png',
-      'https://i.ytimg.com/vi/K_M655e4gIo/maxresdefault.jpg',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLho0WTpw6XnSmFixhL4HUjZIH7JjaYQcyCvKEQBxqxWXaKGgS'];
-
-
-  }
+  ) { }
   ngOnInit() {
     this.reportId = +this.route.snapshot.paramMap.get('id');
     console.log(this.reportId, 'sayfaya gelen rapor id');
     this.getReport(this.reportId);
     /*sayfaya gelen çoklu idler için burası kullanılacak */
-    console.log(this.dataService.retrieveIDs(), 'retrieved data');
+    //  console.log(this.dataService.retrieveIDs(), 'retrieved data');
   }
   forward() {
-
     this.counter++;
     console.log(this.counter);
     if (this.counter === this.imageUrlArray.length) {
@@ -61,17 +53,18 @@ export class ReportDetailsComponent implements OnInit {
 
   }
   getReport(reportId) {
+    console.log(reportId, 'servis');
+
     this.dataService.getReportWithFileId(reportId).then((data: any) => {
       console.log(data);
-      // console.log(Object.values(data));
-      // const output = Object.entries(data).map(([key, value]) => ({ key, value }));
-      // console.log(output);
       this.searchList.push(data);
+      this.searchList.forEach((el) => {
+        this.imageUrlArray.push(el.resim1, el.resim2, el.resim3);
+        this.test.push({ image1: el.resim1, image2: el.resim2, image3: el.resim3 });
+      });
       this.isLoading = true;
       // console.log(this.searchList);
 
     });
   }
-
-
 }

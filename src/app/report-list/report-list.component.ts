@@ -2,32 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ReportsService } from '../reports.service';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
+import * as jsPDF from 'jspdf';
 
 
 @Component({
@@ -39,82 +14,179 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class ReportListComponent implements OnInit {
   userList: any = [];
   searchList: any = [];
-  displayedColumns: string[] = ['select', 'date', 'tc', 'name', 'fileId', 'blood', 'display', 'edit', 'pdf'];
+  displayedColumns: string[] = ['date', 'tc', 'name', 'fileId', 'blood', 'display', 'edit', 'pdf'];
   dataSource: MatTableDataSource<any>;
   selection: any = new SelectionModel<any>(true, []);
   sendValue: any = [];
   isLoading = true;
+  token: any;
+  showList = false;
+  reportList: any = [];
+  exportData: any = [];
+  date: Date = new Date();
   constructor(public dataService: ReportsService) { }
+
   ngOnInit() {
+
+    //  this.token = data.error.error.text;
     this.getUser();
+    this.getAllReport();
   }
 
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    // this.selection._selection.forEach(element => {
-    //   console.log(this.selection.selected, 'selected');
-    //   console.log(element);
-    //   this.sendValue.push(element.fileId);
-    // });
-
-    return numSelected === numRows;
-  }
   /*Kullanıcı Listesini alıyoruz */
   public async getUser() {
+    this.selection.clear();
+    this.sendValue = [];
     await this.dataService.getUser().then((data: any) => {
-       console.log(data, 'data');
-      for (let i = 0; i < 20; i++) {
-        this.userList.push(data[i]);
-        // this.dataService.getReportWithFileId(data[i].fileId).then((element: any) => {
-        //   console.log(element);
-
-        // });
-      }
+      //   console.log(data, 'userList');
+      this.userList = data;
+      this.dataSource = new MatTableDataSource(data);
       this.isLoading = false;
     });
-    this.dataSource = new MatTableDataSource(this.userList);
-    // console.log(this.dataSource);
+
+  }
+  getAllReport() {
+    this.dataService.getAllReports().then((val: any) => {
+      //  console.log(val, 'allreports');
+      this.reportList = val;
+      console.log(this.reportList, 'report', this.userList, 'user');
+      this.userList.forEach(element => {
+        this.reportList.forEach(el => {
+          if (element.fileId === el.dosyaNo) {
+            this.exportData.push({
+              'Dosya No': element.fileId,
+              'Ad Soyad': element.name,
+              'TC No': element.tcId,
+              'Kan Grubu': element.blood,
+              'Tarih': element.date,
+              'Adres': element.address,
+              'Tanı': el.tani,
+              'RaporEden': el.raporEden,
+              'Rapor': el.rapor,
+              'Myloblast': el.myloblast,
+              'Promyelosit': el.promyelosit,
+              'Myelosit': el.myelosit,
+              'Metamyelosit': el.metamyelosit,
+              'Comak': el.comak,
+              'Parcali': el.parcali,
+              'BazofilikSeri': el.bazofilikSeri,
+              'EozinofilikSeri': el.eozinofilikSeri,
+              'Lenfosit': el.lenfosit,
+              'Promonosit': el.promonosit,
+              'Monosit': el.monosit,
+              'PlazmaHucresi': el.plazmaHucresi,
+              'Proeritroblast': el.proeritroblast,
+              'BazofilikErit': el.bazofilikErit,
+              'PolikromalofilikErit': el.polikromalofilikErit,
+              'OrtokromantofilikErit': el.ortokromantofilikErit,
+              'Megakaryositler': el.megakaryositler,
+              'Sellulerite': el.sellulerite,
+            });
+          }
+        });
+
+      });
+    });
   }
   /*search işlemi */
   search(searhquery: string[]) {
     this.isLoading = true;
     if (searhquery.length >= 3) {
-      //  this.dataSource = null;
+      this.selection.clear();
+      this.sendValue = [];
+      this.dataSource = null;
       this.dataService.getUserSearch(searhquery).then((data: any) => {
-        console.log(data);
+        // console.log(data);
+        this.dataSource = new MatTableDataSource(data);
         this.isLoading = false;
-        this.searchList.push(data);
-        this.dataSource = this.searchList;
       });
     } else {
       this.isLoading = false;
-      this.dataSource = this.userList;
+      this.dataSource = new MatTableDataSource(this.userList);
     }
   }
   /* detay sayfasına id gönderme ve tekrar eden array fix */
   sendCheckList() {
-    const reduced = Object.keys(this.sendValue.reduce((p, c) => (p[c] = true, p), {}));
-    console.log(reduced);
-    this.dataService.saveIds(reduced);
+    // const reduced = Object.keys(this.sendValue.reduce((p, c) => (p[c] = true, p), {}));
+    // console.log(reduced);
+    this.dataService.saveIds(this.sendValue);
   }
+
+  isAllSelected() {
+    this.sendValue = [];
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    this.selection._selection.forEach(element => {
+      //   console.log(element, 'secilen tüm elemanlar');
+      this.sendValue.push(element.fileId);
+    });
+    // console.log(this.selection._selection);
+    console.log(this.sendValue, 'seçilen id');
+    return numSelected === numRows;
+  }
+
+  pdfExport(id, name, address, blood, tc, date) {
+    const doc = new jsPDF();
+    this.dataService.getReportWithFileId(id).then((data: any) => {
+      // tslint:disable-next-line:quotemark
+      console.log(data);
+
+      // tslint:disable-next-line:quotemark
+      doc.text(id + " No'lu Hasta Raporu", 105, 30, null, null, 'center');
+      doc.text(date + '', 200, 30);
+
+      doc.text('Ad Soyad: ' + name + '', 20, 40);
+      doc.text('TC No: ' + tc + '', 20, 50);
+      doc.text('Adres: ' + address + '' + '', 20, 60);
+      doc.text('Kan Grubu: ' + blood + '', 20, 70);
+      doc.text('Tanı: ' + data.tani, 20, 75);
+      doc.text('Rapor Eden: ' + data.raporEden, 20, 80);
+
+      // 'Tanı': el.tani,
+      // 'RaporEden': el.raporEden,
+      // 'Rapor': el.rapor,
+      // 'Myloblast': el.myloblast,
+      // 'Promyelosit': el.promyelosit,
+      // 'Myelosit': el.myelosit,
+      // 'Metamyelosit': el.metamyelosit,
+      // 'Comak': el.comak,
+      // 'Parcali': el.parcali,
+      // 'BazofilikSeri': el.bazofilikSeri,
+      // 'EozinofilikSeri': el.eozinofilikSeri,
+      // 'Lenfosit': el.lenfosit,
+      // 'Promonosit': el.promonosit,
+      // 'Monosit': el.monosit,
+      // 'PlazmaHucresi': el.plazmaHucresi,
+      // 'Proeritroblast': el.proeritroblast,
+      // 'BazofilikErit': el.bazofilikErit,
+      // 'PolikromalofilikErit': el.polikromalofilikErit,
+      // 'OrtokromantofilikErit': el.ortokromantofilikErit,
+      // 'Megakaryositler': el.megakaryositler,
+      // 'Sellulerite': el.sellulerite,
+      doc.save(id + '.pdf');
+    });
+
+
+  }
+
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.selection._selection.forEach(element => {
-      console.log(element, 'secilen tüm elemanlar');
-      this.sendValue.push(element.name);
-    });
-    this.isAllSelected() ?
-      this.selection.clear() :
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      this.sendValue = [];
+      console.log(this.sendValue, 'sendValueSilindi');
+
+    } else {
       this.dataSource.data.forEach(row => this.selection.select(row));
+    }
   }
+  // showAll() {
+  //   this.dataSource = new MatTableDataSource(this.showAllList);
+  //   this.showList = true;
+  // }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  logout() {
+    localStorage.clear();
+    this.dataService.getToken();
   }
-
-
-
 }

@@ -9,13 +9,16 @@ import { ReportsService } from './reports.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AddUserComponent } from './add-user/add-user.component';
 import { ReportDetailsComponent } from './report-details/report-details.component';
-import { AddReportComponent } from './add-report/add-report.component';
 import { ImageViewerModule } from '@hallysonh/ngx-imageviewer';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { ExportToExcelComponent } from './export-to-excel/export-to-excel.component';
+import { LoginComponent } from './login/login.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { EditReportandUserComponent } from './edit-reportand-user/edit-reportand-user.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { FormsModule } from '@angular/forms';
     ReportListComponent,
     AddUserComponent,
     ReportDetailsComponent,
-    AddReportComponent,
+    ExportToExcelComponent,
+    LoginComponent,
+    EditReportandUserComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -40,10 +46,9 @@ import { FormsModule } from '@angular/forms';
     MatProgressSpinnerModule,
     MatIconModule,
     MatInputModule,
-    FormsModule
-
-
-
+    FormsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   providers: [ReportsService],
   bootstrap: [AppComponent],

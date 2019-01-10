@@ -7,10 +7,16 @@ input {
 }
 
 .inputDiv {
+    margin-top: 5px;
     margin-left: 12px;
     margin-right: 6px;
 }
 
 input[_ngcontent-c1] {
     height: 50px;
+    border: 1px solid #d0d0d0;
 }
+.mat-form-field {
+    width: 100%;
+    height: 50px;
+  }

@@ -1,17 +1,19 @@
 <div class="inputDiv">
   <input matInput (keyup)="search($event.target.value)" placeholder="Arama yapmak istediğiniz kullanıcı bilgilerini giriniz">
 </div>
-<div style="float: right;">
-  <button routerLink = '/addUser' style='background-color: #2ac848; color: #fff;' mat-raised-button>
-    <mat-icon>add</mat-icon> 
+<div style="display: flex; justify-content: space-between; margin-top: 10px">
+  <app-export-to-excel [jsonData]='this.exportData' [fileName]='this.date'></app-export-to-excel>
+
+  <button routerLink='/addUser' style='background-color: #2ac848; color: #fff;' mat-raised-button>
+    <mat-icon>add</mat-icon>
     Yeni Kayıt
   </button>
 </div>
 
-
-<table mat-table *ngIf="userList.length == 20" [dataSource]="dataSource" class="mat-elevation-z8" style="margin-top:50px ">
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="select">
+<body>
+  <table *ngIf='dataSource' mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="margin-top:50px ">
+    <!-- Checkbox Column -->
+    <!-- <ng-container matColumnDef="select">
     <th mat-header-cell *matHeaderCellDef>
       <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
         [indeterminate]="selection.hasValue() && !isAllSelected()">
@@ -22,79 +24,89 @@
       </mat-checkbox>
 
     </td>
-  </ng-container>
+  </ng-container> -->
 
-  <!-- index Column -->
-  <!-- <ng-container matColumnDef="index">
+    <!-- index Column -->
+    <!-- <ng-container matColumnDef="index">
       <th mat-header-cell *matHeaderCellDef> Sıra </th>
       <td mat-cell *matCellDef="let element; let i=index"> <a routerLink="/detail/{{element.fileId}}">{{i+1}}</a></td>
   
   
     </ng-container> -->
 
-  <!-- Date Column -->
-  <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef> Tarih </th>
-    <td mat-cell *matCellDef="let element"> Tarih gelecek </td>
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Tarih </th>
+      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
 
 
-  </ng-container>
+    </ng-container>
 
-  <!-- Tc Column -->
-  <ng-container matColumnDef="tc">
-    <th mat-header-cell *matHeaderCellDef> TC No. </th>
-    <td mat-cell *matCellDef="let element"> <a routerLink="/detail/{{element.fileId}}">{{element.tcId}}</a></td>
+    <!-- Tc Column -->
+    <ng-container matColumnDef="tc">
+      <th mat-header-cell *matHeaderCellDef> TC No. </th>
+      <td mat-cell *matCellDef="let element">{{element.tcId}}</td>
 
 
-  </ng-container>
+    </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Ad Soyad </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Ad Soyad </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
 
-  <!-- File Column -->
-  <ng-container matColumnDef="fileId">
-    <th mat-header-cell *matHeaderCellDef> Dosya No: </th>
-    <td mat-cell *matCellDef="let element"> {{element.fileId}} </td>
-  </ng-container>
+    <!-- File Column -->
+    <ng-container matColumnDef="fileId">
+      <th mat-header-cell *matHeaderCellDef> Dosya No: </th>
+      <td mat-cell *matCellDef="let element"> {{element.fileId}} </td>
+    </ng-container>
 
-  <!-- Blood Column -->
-  <ng-container matColumnDef="blood">
-    <th mat-header-cell *matHeaderCellDef> Kan Grubu </th>
-    <td mat-cell *matCellDef="let element"> {{element.blood}} </td>
-  </ng-container>
+    <!-- Blood Column -->
+    <ng-container matColumnDef="blood">
+      <th mat-header-cell *matHeaderCellDef> Kan Grubu </th>
+      <td mat-cell *matCellDef="let element"> {{element.blood}} </td>
+    </ng-container>
 
-  <!-- DisplayButton Column -->
-  <ng-container matColumnDef="display">
-    <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" routerLink="/detail/{{element.fileId}}">
-        <a>Görüntüle</a></button> </td>
-  </ng-container>
+    <!-- DisplayButton Column -->
+    <ng-container matColumnDef="display">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" routerLink="/detail/{{element.fileId}}">
+          <a>Görüntüle</a></button> </td>
+    </ng-container>
 
-  <!-- EditButton Column -->
-  <ng-container matColumnDef="edit">
-    <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let element"><button mat-raised-button color="secondary" routerLink="/detail" (click)="sendCheckList()">
-        <a>Düzenle</a></button> </td>
-  </ng-container>
+    <!-- EditButton Column -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"><button mat-raised-button color="secondary" routerLink="/edit/{{element.fileId}}" (click)="sendCheckList()">
+          <a>Düzenle</a></button> </td>
+    </ng-container>
 
-  <!-- PdfButton Column -->
-  <ng-container matColumnDef="pdf">
-    <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let element"><button mat-raised-button color="secondary" routerLink="/detail" (click)="sendCheckList()">
-        <a>Pdf'e Aktar</a></button> </td>
-  </ng-container>
+    <!-- PdfButton Column -->
+    <ng-container matColumnDef="pdf">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"><button mat-raised-button color="secondary" (click)='pdfExport(element.fileId, element.name, element.address, element.blood, element.tcId, element.date)'>
+          <a>Pdf'e Aktar</a></button> </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
-  </tr>
-</table>
-<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
-  <mat-progress-spinner color="primary" mode="indeterminate">
-  </mat-progress-spinner>
-</mat-card>
-<!-- checklistten secili elementleri diger sayfaya taşıyoruz -->
-<div style="text-align: center; margin-top: 10px;"><button mat-stroked-button color="warn" style="min-width: 200px"
-    routerLink="/detail" (click)="sendCheckList()"> <a>Tümünü Gör</a></button></div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+    </tr>
+  </table>
+  <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+    <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+  </mat-card>
+  <!-- checklistten secili elementleri diger sayfaya taşıyoruz -->
+  <div *ngIf='!showList' style="text-align: center; margin-top: 10px;"><button mat-stroked-button color="warn" style="min-width: 200px">
+      Tümünü Gör</button>
+  </div>
+
+</body>
+
+<footer style="margin-top: 20px; background-color: #4f5678; height: 130px; width:100%; position: fixed; bottom:0; left: 0;">
+  <div style='text-align: center; font-size: 15px; margin-top: 10px'>
+    <button (click)='logout()' mat-raised-button color='warn' style='margin-top:20px'>Güvenli Çıkış</button>
+    <p style="color: white">Designed by ÇMF Soft in Çorlu Mühendislik Fakültesi </p>
+    <p style="color: white">2019 - </p>
+  </div>
+</footer>

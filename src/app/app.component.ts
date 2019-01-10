@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportsService } from './reports.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -8,14 +9,7 @@ import { ReportsService } from './reports.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  constructor(public reportService: ReportsService) {
-    /*service denedik*/
-    this.reportService.getData().subscribe((data: any) => {
-
- //     console.log(data.textfile);
-
-    });
+  constructor(public reportService: ReportsService, private router: Router, private route: ActivatedRoute) {
   }
 
 }

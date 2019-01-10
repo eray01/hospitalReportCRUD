@@ -1,27 +1,20 @@
-<button *ngIf='this.addUserSection' class="collapsible" (click)='showUser()'>Hasta Bilgilerini Düzenlemek İçin
-  Tıklayınız</button>
-<header *ngIf='!this.addUserSection'>
-  <div style=' margin-bottom: 15px; padding: 4px 12px;' class="info">
-    <p><strong>Bilgi!</strong> Hastayı ekledikten sonra rapor ekleyebilirsiniz.</p>
-  </div>
-  <h1>Hasta Ekleme</h1>
+<header>
+  <h1>Rapor Düzenleme</h1>
   <!-- <p>Yeni rapor eklemeden önce kullanıcı oluşturulması gerekmektedir.</p> -->
 </header>
 
-<div *ngIf='!this.addUserSection' class="form-container">
+<div class="form-container">
   <mat-form-field>
-    <input matInput placeholder="Dosya Numarası" type="text" [(ngModel)]="fileId">
+    <input  [disabled]='true' matInput placeholder="Dosya Numarası" type="text" [(ngModel)]="fileId">
     <button mat-button *ngIf="fileId" matSuffix mat-icon-button aria-label="Clear" (click)="fileId=''">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-  <mat-form-field>
-      <input matInput placeholder="Tarih:"
-       name = 'dateUser'
-      [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2">
-<owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
-      <owl-date-time #dt1 [pickerMode]="'calendar'"></owl-date-time>
-    </mat-form-field>
+  <!-- <mat-form-field>
+    <input matInput placeholder="Tarih:" name='dateUser' [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2">
+    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+    <owl-date-time #dt1 [pickerMode]="'calendar'"></owl-date-time>
+  </mat-form-field> -->
   <mat-form-field>
     <input matInput placeholder="Ad Soyad" type="text" [(ngModel)]="name" style="text-transform: capitalize">
     <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
@@ -49,16 +42,16 @@
     </button>
   </mat-form-field>
 
-  <div style="text-align: center">
+  <!-- <div style="text-align: center">
     <button style='width:200px; font-size: 20px' mat-stroked-button color='primary' (click)='addUser()'>Ekle</button>
-  </div>
+  </div> -->
 
 </div>
 
-<div *ngIf='this.showReport' >
-  <header>
-    <h1 color='primary'>Rapor Ekleme</h1>
-  </header>
+<div>
+  <!-- <header>
+    <h1 color='primary'>Rapor Düzenleme</h1>
+  </header> -->
 
   <div style="display: flex; justify-content: space-evenly">
     <div *ngFor="let item of [1,2,3]">
@@ -69,17 +62,14 @@
   </div>
   <!-- <button (click)="onUpload()">Upload!</button> -->
   <div class="form-container">
-    <mat-form-field>
+    <!-- <mat-form-field>
       <input matInput [disabled]='true' placeholder="Dosya No: {{this.reportDetail.fileNo}}">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput placeholder="Tarih:"
-         name = 'dateReport'
-        [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2">
-  <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
-        <owl-date-time #dt1 [pickerMode]="'calendar'"></owl-date-time>
-      <!-- <input matInput placeholder="Tarih" name=x size=10 maxlength=10 (keyup)="formatDate()" [(ngModel)]="reportDetail.date"> -->
-    </mat-form-field>
+    </mat-form-field> -->
+    <!-- <mat-form-field>
+      <input matInput placeholder="Tarih:" name='dateReport' [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2">
+      <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+      <owl-date-time #dt1 [pickerMode]="'calendar'"></owl-date-time>
+    </mat-form-field> -->
     <mat-form-field>
       <input matInput placeholder="Raporlayan Kişi" [(ngModel)]="reportDetail.reporter">
     </mat-form-field>
@@ -147,7 +137,7 @@
       <input matInput placeholder="Tanı" [(ngModel)]="reportDetail.tani">
     </mat-form-field>
     <div style="text-align: center">
-      <button style='width:200px; font-size: 20px' mat-stroked-button color='primary' (click)='onUpload()'>Kaydet</button>
+      <button style='width:200px; font-size: 20px' mat-stroked-button color='primary' (click)='updateData()'>Güncelle</button>
     </div>
 
   </div>

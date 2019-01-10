@@ -10,11 +10,7 @@
   </slideshow> -->
 
     <!-- <ngx-image-viewer  [src]="imageUrlArray" ></ngx-image-viewer> -->
-    <ngx-imageviewer [src]="imageUrlArray[counter]"></ngx-imageviewer>
-
-
-
-
+    <ngx-imageviewer [src]="imageUrlArray[counter]" ></ngx-imageviewer>
 </div>
 
 <table *ngFor='let item of this.searchList'>
@@ -38,7 +34,7 @@
   </tr>
   <tr>
     <td>Eozinofilik Seri</td>
-    <td>{{item.EozinofilikSeri}}</td>
+    <td>{{item.eozinofilikSeri}}</td>
   </tr>
   <tr>
     <td>Lenfosit</td>
