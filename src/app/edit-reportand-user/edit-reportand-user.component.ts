@@ -17,6 +17,7 @@ export class EditReportandUserComponent implements OnInit {
   selectedFileTwo: File;
   selectedFileThree: File;
   reportDetail: any = {};
+  userDetail: any = {};
   addUserSection: boolean;
   imageArr: any;
   editImage: any = { one: '', two: '', three: '' };
@@ -131,6 +132,7 @@ export class EditReportandUserComponent implements OnInit {
   getReport() {
     this.dataService.getReportWithFileId(this.fileId).then((data: any) => {
       console.log(data);
+      this.reportDetail.raporId = data.raporId;
       this.reportDetail.fileNo = this.fileId;
       this.reportDetail.reporter = data.raporEden;
       this.reportDetail.bazoErit = data.bazofilikErit;
@@ -153,24 +155,32 @@ export class EditReportandUserComponent implements OnInit {
       this.reportDetail.sellul = data.sellulerite;
       this.reportDetail.report = data.rapor;
       this.reportDetail.tani = data.tani;
+      this.reportDetail.tarih = data.tarih;
 
     });
   }
   getUser() {
     this.dataService.getUserWithFileId(this.fileId).then((data: any) => {
-      console.log(data);
-      this.name = data.name;
-      this.tcNo = data.tcId;
-      this.blood = data.blood;
-      this.address = data.address;
-
+      this.userDetail.id = data.id;
+      this.userDetail.name = data.name;
+      this.userDetail.fileId = data.fileId;
+      this.userDetail.tcId = data.tcId;
+      this.userDetail.blood = data.blood;
+      this.userDetail.address = data.address;
+      this.userDetail.date = data.date;
     });
   }
 
   updateData() {
-    this.dataService.updateReport(this.reportDetail, '').then((data) => {
-      console.log(data);
-
+    this.dataService.updateUser(this.userDetail).then((data) => {
+      if(data != null) {
+        this.dataService.updateReport(this.reportDetail).then((data) => {
+          if(data != null) {
+            this.router.navigate(['/list']);
+          }
+        });
+      }
     });
+
   }
 }

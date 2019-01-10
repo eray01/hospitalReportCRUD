@@ -16,27 +16,27 @@
     <owl-date-time #dt1 [pickerMode]="'calendar'"></owl-date-time>
   </mat-form-field> -->
   <mat-form-field>
-    <input matInput placeholder="Ad Soyad" type="text" [(ngModel)]="name" style="text-transform: capitalize">
+    <input matInput placeholder="Ad Soyad" type="text" [(ngModel)]="userDetail.name" style="text-transform: capitalize">
     <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
   <mat-form-field>
-    <input matInput maxlength='11' placeholder="TC Kimlik No" [(ngModel)]="tcNo">
+    <input matInput maxlength='11' placeholder="TC Kimlik No" [(ngModel)]="userDetail.tcId">
     <button mat-button *ngIf="tcNo" matSuffix mat-icon-button aria-label="Clear" (click)="tcNo=''">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput maxlength='4' placeholder="Kan Grubu" [(ngModel)]="blood" style='text-transform: uppercase'>
+    <input matInput maxlength='4' placeholder="Kan Grubu" [(ngModel)]="userDetail.blood" style='text-transform: uppercase'>
     <button mat-button *ngIf="blood" matSuffix mat-icon-button aria-label="Clear" (click)="blood=''">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
 
   <mat-form-field>
-    <textarea matInput placeholder="Adres" rows='5' [(ngModel)]="address" style="text-transform: capitalize"></textarea>
+    <textarea matInput placeholder="Adres" rows='5' [(ngModel)]="userDetail.address" style="text-transform: capitalize"></textarea>
     <button mat-button *ngIf="address" matSuffix mat-icon-button aria-label="Clear" (click)="address=''">
       <mat-icon>close</mat-icon>
     </button>

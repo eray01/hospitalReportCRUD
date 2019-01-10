@@ -277,10 +277,11 @@ export class ReportsService {
         );
     });
   }
-  updateReport(report: any, images) {
+  updateReport(report: any) {
     //  console.log(report);
 
     const postparams = {
+      'raporId':report.raporId,
       'dosyaNo': report.fileNo,
       'myloblast': report.myloblast,
       'promyelosit': report.promyelosit,
@@ -303,22 +304,46 @@ export class ReportsService {
       'tani': report.tani,
       'raporEden': report.reporter,
       'rapor': report.report,
-      'tarih': report.date,
+      'tarih': report.tarih,
       'resim1': '',
       'resim2': '',
       'resim3': ''
     };
-    for (let i = 0; i < images.length; i++) {
-      postparams.resim1 = images[0];
-      postparams.resim2 = images[1];
-      postparams.resim3 = images[2];
+    const token = this.getToken().toString();
+    const header = { 'content-type': 'application/json', 'Authorization': token };
+    console.log(report);
+    return new Promise(resolve => {
+      this.http
+        .put(this.url + 'report/update/' + report.raporId, postparams, {
+          headers: header
+        })
+        .subscribe(
+          res => {
+            resolve(res);
+          },
+          error => {
+            console.log(error);
+            resolve(error);
+          }
+        );
+    });
+  }
+
+  updateUser(userDetails: any) {
+    const postParams = {
+      'id':userDetails.id,
+      'name':userDetails.name,
+      'fileId':userDetails.fileId,
+      'tcId':userDetails.tcId,
+      'blood':userDetails.blood,
+      'address':userDetails.address,
+      'date':userDetails.date
     }
-    console.log(postparams, 'resimler eklendi mi');
     const token = this.getToken().toString();
     const header = { 'content-type': 'application/json', 'Authorization': token };
     return new Promise(resolve => {
       this.http
-        .put(this.url + 'report/update/' + report.fileNo, postparams, {
+        .put(this.url + 'user/update/' + userDetails.id, postParams, {
           headers: header
         })
         .subscribe(
