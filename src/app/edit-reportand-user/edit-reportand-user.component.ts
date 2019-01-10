@@ -173,9 +173,10 @@ export class EditReportandUserComponent implements OnInit {
 
   updateData() {
     this.dataService.updateUser(this.userDetail).then((data) => {
-      if(data != null) {
+      if (data != null) {
+        // tslint:disable-next-line:no-shadowed-variable
         this.dataService.updateReport(this.reportDetail).then((data) => {
-          if(data != null) {
+          if (data != null) {
             this.router.navigate(['/list']);
           }
         });

@@ -281,7 +281,7 @@ export class ReportsService {
     //  console.log(report);
 
     const postparams = {
-      'raporId':report.raporId,
+      'raporId': report.raporId,
       'dosyaNo': report.fileNo,
       'myloblast': report.myloblast,
       'promyelosit': report.promyelosit,
@@ -331,14 +331,14 @@ export class ReportsService {
 
   updateUser(userDetails: any) {
     const postParams = {
-      'id':userDetails.id,
-      'name':userDetails.name,
-      'fileId':userDetails.fileId,
-      'tcId':userDetails.tcId,
-      'blood':userDetails.blood,
-      'address':userDetails.address,
-      'date':userDetails.date
-    }
+      'id': userDetails.id,
+      'name': userDetails.name,
+      'fileId': userDetails.fileId,
+      'tcId': userDetails.tcId,
+      'blood': userDetails.blood,
+      'address': userDetails.address,
+      'date': userDetails.date
+    };
     const token = this.getToken().toString();
     const header = { 'content-type': 'application/json', 'Authorization': token };
     return new Promise(resolve => {
