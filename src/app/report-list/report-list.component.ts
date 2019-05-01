@@ -14,7 +14,8 @@ import * as jsPDF from 'jspdf';
 export class ReportListComponent implements OnInit {
   userList: any = [];
   searchList: any = [];
-  displayedColumns: string[] = ['date', 'tc', 'name', 'fileId', 'blood', 'display', 'edit', 'pdf'];
+  // displayedColumns: string[] = ['date', 'tc', 'name', 'fileId', 'blood', 'display', 'edit', 'pdf'];
+  displayedColumns: string[] = ['date', 'tc', 'name', 'fileId', 'blood', 'display', 'edit'];
   dataSource: MatTableDataSource<any>;
   selection: any = new SelectionModel<any>(true, []);
   sendValue: any = [];

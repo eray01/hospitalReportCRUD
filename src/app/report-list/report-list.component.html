@@ -10,7 +10,6 @@
   </button>
 </div>
 
-<body>
   <table *ngIf='dataSource' mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="margin-top:50px ">
     <!-- Checkbox Column -->
     <!-- <ng-container matColumnDef="select">
@@ -83,11 +82,11 @@
     </ng-container>
 
     <!-- PdfButton Column -->
-    <ng-container matColumnDef="pdf">
+    <!-- <ng-container matColumnDef="pdf">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element"><button mat-raised-button color="secondary" (click)='pdfExport(element.fileId, element.name, element.address, element.blood, element.tcId, element.date)'>
           <a>Pdf'e Aktar</a></button> </td>
-    </ng-container>
+    </ng-container> -->
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
@@ -101,12 +100,10 @@
       Tümünü Gör</button>
   </div>
 
-</body>
-
-<footer style="margin-top: 20px; background-color: #4f5678; height: 130px; width:100%; position: fixed; bottom:0; left: 0;">
+<footer style="margin-top: 20px; background-color: #4f5678; height: 130px; width:100%; position: relative; bottom:0; left: 0;">
   <div style='text-align: center; font-size: 15px; margin-top: 10px'>
     <button (click)='logout()' mat-raised-button color='warn' style='margin-top:20px'>Güvenli Çıkış</button>
     <p style="color: white">Designed by ÇMF Soft in Çorlu Mühendislik Fakültesi </p>
-    <p style="color: white">2019 - </p>
+    <p style="color: white">2019</p>
   </div>
 </footer>

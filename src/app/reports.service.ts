@@ -14,6 +14,7 @@ export class ReportsService {
   myIds: Array<Number> = [];
   constructor(private http: HttpClient, private router: Router) {
     console.log('hi from service');
+    this.getHomeResults();
   }
 
   getData() {
@@ -100,6 +101,22 @@ export class ReportsService {
           error => {
             console.log(error);
 
+          }
+        );
+    });
+  }
+  getHomeResults() {
+    const token = this.getToken().toString();
+    const header = { 'Authorization': token };
+    return new Promise(resolve => {
+      this.http.get(this.url + 'user/homeresults', { headers: header})
+        .subscribe(
+          res => {
+            resolve(res);
+            console.log(res);
+          },
+          error => {
+            console.log(error);
           }
         );
     });
