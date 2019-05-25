@@ -2,11 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReportsService } from '../reports.service';
 
-export interface ReportInfo {
-  bazofilik: any;
-  comak: any;
-}
-
 @Component({
   selector: 'app-report-details',
   templateUrl: './report-details.component.html',
@@ -21,7 +16,6 @@ export class ReportDetailsComponent implements OnInit {
   searchList: any = [];
   isLoading = false;
   temp: any = [];
-  reportArr: ReportInfo[] = new Array<ReportInfo>();
   test: any = [];
   constructor(
     private route: ActivatedRoute,

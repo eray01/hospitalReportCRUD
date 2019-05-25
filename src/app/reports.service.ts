@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class ReportsService {
-  url = 'http://localhost:8080/';
+  // url = 'http://localhost:8080/';
+  url =  'https://springhost.herokuapp.com/';
   testurl = 'assets/fake.json';
   myIds: Array<Number> = [];
   constructor(private http: HttpClient, private router: Router) {
@@ -228,7 +229,8 @@ export class ReportsService {
       }
     });
     return new Promise(resolve => {
-      this.http.post('http://localhost:8080/uploadMultiple/' + fileId, uploadData, { headers: header })
+      // this.http.post('http://localhost:8080/uploadMultiple/' + fileId, uploadData, { headers: header })
+      this.http.post('https://springhost.herokuapp.com/uploadMultiple/' + fileId, uploadData, {headers: header})
         .subscribe(
           res => {
             resolve(res);
@@ -331,7 +333,7 @@ export class ReportsService {
     console.log(report);
     return new Promise(resolve => {
       this.http
-        .put(this.url + 'report/update/' + report.raporId, postparams, {
+        .put(this.url + 'report/update/' + report.fileNo, postparams, {   //buraya fileno ile gidilmesi gerekiyor. kullanıcı ekleme ekranından sonra çıkılmış olabilir. report.id changed
           headers: header
         })
         .subscribe(
