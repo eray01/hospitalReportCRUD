@@ -333,6 +333,7 @@ export class ReportsService {
     console.log(report);
     return new Promise(resolve => {
       this.http
+// tslint:disable-next-line: max-line-length
         .put(this.url + 'report/update/' + report.fileNo, postparams, {   //buraya fileno ile gidilmesi gerekiyor. kullanıcı ekleme ekranından sonra çıkılmış olabilir. report.id changed
           headers: header
         })
